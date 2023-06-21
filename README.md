@@ -6,7 +6,9 @@ It can be run on remix.
 # HelloWorld.sol
 
 # Description 
-This simple smart contract is a demonstration of how to create and modify state in solidity.
+This simple smart contract is a demonstration of how to create and modify state in solidity. Use onlyOwner to modify ownership of certain attributes,
+such as setting new text or transferring ownership.
+There is also and HelloWorld1.sol with a amore complex implementation
 
 # Explanation
 1) all the functions are either public or internal. 
@@ -34,8 +36,10 @@ In summary, the fact that string is a dynamic type that can vary in length makes
 You can get the text "Hello Wolrd", set a new Text modifying the state of the smart contract. Verify if the text is the original text or enforce the original text
 
 # Ballot.sol
-The one deployed in the script is the Ballot.sol contract without ERC20.
-It can be run as below with yarn and is taking command line arguments as proposals
+
+# Description
+The one deployed in the script is the Ballot.sol contract without ERC20. It is used for voting, giveRithToVote, delegate and so on.
+Only the deployer can give rith to vote
 
 ```shell
 yarn run ts-node --files scripts\DeployBallot2.0.ts "Water" "Whisky" "Rhum" "Beer" "Coke"
