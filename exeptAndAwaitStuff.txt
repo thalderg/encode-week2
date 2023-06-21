@@ -1,0 +1,21 @@
+It depends on the return type. ballotContract.connect(chairman).winningProposal() 
+wasn't being awaited to get back the result. When you put it instead, it evaluated 
+to 0 and then expected it to.eq(0).
+
+The expect function is used to assert that a certain condition is met. It returns a promise that 
+resolves if the assertion passes and rejects if it fails
+
+They also mention best practices, for eg.
+
+Putting an await inside an expect is not recommended. One operation inside another operation leads to a complication.
+
+Instead of:
+
+  expect(await page.title()).toBe("Button Title");
+});
+It is better to write:
+
+test("Should have title on the button", async () => {
+  const title = await page.title();
+  expect(title).toBe("Button Title");
+});

@@ -1,0 +1,26 @@
+yarn run ts-node --files scripts\Deployment.ts "Chocolate" "Vanilla" "Strawberry" "Coffee"
+yarn hardhat run scripts/giveRightToVote.ts
+yarn hardhat run .\scripts\DeployERC20Votes2.0.ts
+
+yarn run ts-node --files scripts\DeployBallot2.0.ts "Water" "Whisky" "Rhum" "Beer" "Coke"
+
+// SPDX-License-Identifier: MIT
+pragma solidity >=0.8.0;
+
+import "usingtellor/contracts/UsingTellor.sol";
+
+contract ExampleContract is UsingTellor {
+    constructor (address payable _tellorAddress) UsingTellor(_tellorAddress){}
+
+    function getBtcSpotPrice() external view returns(uint256) {
+    
+      bytes memory _queryData = abi.encode("SpotPrice", abi.encode("btc", "usd"));
+      bytes32 _queryId = keccak256(_queryData);
+      
+      (bytes memory _value, uint256 _timestampRetrieved) =
+          getDataBefore(_queryId, block.timestamp - 20 minutes);
+      if (_timestampRetrieved == 0) return 0;
+      require(block.timestamp - _timestampRetrieved < 24 hours, "The data is too old");
+      return abi.decode(_value, (uint256));
+    }
+}
